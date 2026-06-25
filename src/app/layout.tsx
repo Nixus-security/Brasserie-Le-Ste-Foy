@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Cormorant_Garamond, Outfit } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-heading",
   display: "swap",
 });
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
@@ -38,6 +40,35 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  name: "Brasserie Le Ste Foy",
+  image: "/images/logo-brasserie-ste-foy.jpg",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "7 Place Xavier Ricard",
+    addressLocality: "Sainte-Foy-lès-Lyon",
+    postalCode: "69110",
+    addressCountry: "FR",
+  },
+  telephone: "+33426641388",
+  servesCuisine: "Cuisine française",
+  priceRange: "€€",
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday"], opens: "07:00", closes: "19:45" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Thursday", opens: "07:00", closes: "22:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Friday", opens: "07:00", closes: "20:30" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "08:00", closes: "15:00" },
+  ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.4",
+    reviewCount: "66",
+    bestRating: "5",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -45,8 +76,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
-        className={`${playfair.variable} ${inter.variable} font-[family-name:var(--font-body)] antialiased bg-navy-deeper grain`}
+        className={`${cormorant.variable} ${outfit.variable} font-[family-name:var(--font-body)] antialiased bg-navy-deeper grain`}
       >
         <SmoothScroll />
         <PageTransition>{children}</PageTransition>

@@ -14,7 +14,7 @@ export default function Footer() {
               <Reveal animation="fade-right" duration={900}>
                 <div className="flex items-center gap-4 mb-6">
                   <Image
-                    src="/images/logo Braseerie St-foy.jpg"
+                    src="/images/logo-brasserie-ste-foy.jpg"
                     alt="Brasserie Le Ste Foy"
                     width={60}
                     height={60}
@@ -29,7 +29,7 @@ export default function Footer() {
                     </p>
                   </div>
                 </div>
-                <p className="text-white/30 text-sm leading-relaxed max-w-sm">
+                <p className="text-white/60 text-sm leading-relaxed max-w-sm">
                   Brasserie de quartier au cœur de Sainte-Foy-lès-Lyon. Plats
                   généreux, ambiance conviviale et produits de terroir depuis la
                   Place Xavier Ricard.
@@ -55,7 +55,7 @@ export default function Footer() {
                     <li key={link.href}>
                       <TransitionLink
                         href={link.href}
-                        className="text-white/30 hover:text-gold text-sm transition-colors"
+                        className="text-white/60 hover:text-gold text-sm transition-colors"
                       >
                         {link.label}
                       </TransitionLink>
@@ -75,7 +75,7 @@ export default function Footer() {
                     href="https://instagram.com/lestefoy_brasserie"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-white/30 hover:text-gold text-sm transition-colors"
+                    className="flex items-center gap-3 text-white/60 hover:text-gold text-sm transition-colors"
                   >
                     <svg
                       className="w-5 h-5"
@@ -90,7 +90,7 @@ export default function Footer() {
                     href="https://facebook.com/446186362232161"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-white/30 hover:text-gold text-sm transition-colors"
+                    className="flex items-center gap-3 text-white/60 hover:text-gold text-sm transition-colors"
                   >
                     <svg
                       className="w-5 h-5"
@@ -106,13 +106,13 @@ export default function Footer() {
                 <div className="mt-8 pt-6 border-t border-white/5 space-y-2">
                   <a
                     href="tel:+33426641388"
-                    className="block text-white/30 hover:text-gold text-sm transition-colors"
+                    className="block text-white/60 hover:text-gold text-sm transition-colors"
                   >
                     04 26 64 13 88
                   </a>
                   <a
                     href="mailto:brasserielestefoy@icloud.com"
-                    className="block text-white/30 hover:text-gold text-sm transition-colors"
+                    className="block text-white/60 hover:text-gold text-sm transition-colors"
                   >
                     brasserielestefoy@icloud.com
                   </a>
@@ -125,11 +125,11 @@ export default function Footer() {
 
       <div className="border-t border-white/5 bg-navy-deeper">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/20 text-xs">
+          <p className="text-white/50 text-xs">
             © {new Date().getFullYear()} Brasserie Le Ste Foy. Tous droits
             réservés.
           </p>
-          <p className="text-white/20 text-xs">
+          <p className="text-white/50 text-xs">
             7 Place Xavier Ricard, 69110 Sainte-Foy-lès-Lyon
           </p>
         </div>

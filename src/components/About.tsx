@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { UtensilsCrossed, Leaf, Clock, Users } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import type { LucideIcon } from "lucide-react";
 
-const features = [
+const features: { icon: LucideIcon; title: string; description: string }[] = [
   {
     icon: UtensilsCrossed,
     title: "Fait Maison",
@@ -27,6 +28,43 @@ const features = [
   },
 ];
 
+function FeatureItem({
+  feature,
+  large = false,
+}: {
+  feature: (typeof features)[number];
+  large?: boolean;
+}) {
+  const Icon = feature.icon;
+  return (
+    <div className="flex gap-4 group">
+      <div
+        className={`shrink-0 bg-navy-dark flex items-center justify-center group-hover:bg-crimson transition-all duration-500 ${
+          large ? "w-14 h-14" : "w-10 h-10"
+        }`}
+      >
+        <Icon
+          className={`text-gold group-hover:text-white transition-colors duration-500 ${
+            large ? "w-6 h-6" : "w-4 h-4"
+          }`}
+        />
+      </div>
+      <div>
+        <h3
+          className={`font-semibold text-navy uppercase tracking-wide ${
+            large ? "text-sm mb-1" : "text-xs mb-0.5"
+          }`}
+        >
+          {feature.title}
+        </h3>
+        <p className="text-warm-gray text-sm leading-relaxed">
+          {feature.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function About() {
   return (
     <section id="apropos" className="py-16 sm:py-20 lg:py-32 bg-cream relative overflow-hidden">
@@ -35,46 +73,45 @@ export default function About() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Photos grid */}
           <Reveal animation="fade-right" duration={1200} className="relative">
             <div className="grid grid-cols-12 gap-4">
               <div className="col-span-7 space-y-4">
-                <div className="rounded-sm overflow-hidden shadow-2xl group">
+                <div className="rounded-sm overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/Capture d'écran 2026-06-24 204908.png"
+                    src="/images/interieur-bar.png"
                     alt="Intérieur de la brasserie"
                     width={500}
                     height={600}
-                    className="object-cover w-full h-72 sm:h-80 transition-transform duration-[1.5s] group-hover:scale-110"
+                    className="object-cover w-full h-72 sm:h-80"
                   />
                 </div>
-                <div className="rounded-sm overflow-hidden shadow-2xl group">
+                <div className="rounded-sm overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/Capture d'écran 2026-06-24 204732.png"
+                    src="/images/facade-brasserie.png"
                     alt="Entrée de la brasserie"
                     width={500}
                     height={400}
-                    className="object-cover w-full h-48 transition-transform duration-[1.5s] group-hover:scale-110"
+                    className="object-cover w-full h-48"
                   />
                 </div>
               </div>
               <div className="col-span-5 space-y-4 pt-12">
-                <div className="rounded-sm overflow-hidden shadow-2xl group">
+                <div className="rounded-sm overflow-hidden shadow-2xl">
                   <Image
                     src="/images/plat.png"
                     alt="Œufs meurette"
                     width={400}
                     height={400}
-                    className="object-cover w-full h-48 transition-transform duration-[1.5s] group-hover:scale-110"
+                    className="object-cover w-full h-48"
                   />
                 </div>
-                <div className="rounded-sm overflow-hidden shadow-2xl group">
+                <div className="rounded-sm overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/Capture d'écran 2026-06-24 204811.png"
+                    src="/images/terrasse-soiree.png"
                     alt="Terrasse de la brasserie"
                     width={400}
                     height={500}
-                    className="object-cover w-full h-72 sm:h-80 transition-transform duration-[1.5s] group-hover:scale-110"
+                    className="object-cover w-full h-72 sm:h-80"
                   />
                 </div>
               </div>
@@ -89,7 +126,7 @@ export default function About() {
                   <div className="text-white/90 text-sm font-medium">
                     Budget moyen
                   </div>
-                  <div className="text-white/50 text-xs">
+                  <div className="text-white/60 text-xs">
                     21 – 30€ par personne
                   </div>
                 </div>
@@ -97,7 +134,6 @@ export default function About() {
             </div>
           </Reveal>
 
-          {/* Text content */}
           <div>
             <Reveal animation="fade-left" duration={900}>
               <div className="flex items-center gap-3 mb-4">
@@ -112,7 +148,7 @@ export default function About() {
               <h2 className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl lg:text-6xl text-navy leading-tight mb-6 sm:mb-8">
                 Une brasserie
                 <br />
-                de <span className="text-gradient italic">tradition</span>
+                de <span className="text-crimson italic">tradition</span>
               </h2>
             </Reveal>
 
@@ -133,27 +169,23 @@ export default function About() {
               </p>
             </Reveal>
 
-            <div className="grid sm:grid-cols-2 gap-8">
-              {features.map((feature, i) => (
+            {/* First feature — larger, full width */}
+            <Reveal animation="fade-up" delay={400} duration={700}>
+              <div className="pb-6 mb-6 border-b border-cream-dark">
+                <FeatureItem feature={features[0]} large />
+              </div>
+            </Reveal>
+
+            {/* Remaining features — compact list */}
+            <div className="space-y-5">
+              {features.slice(1).map((feature, i) => (
                 <Reveal
                   key={feature.title}
                   animation="fade-up"
-                  delay={400 + i * 150}
+                  delay={550 + i * 120}
                   duration={700}
                 >
-                  <div className="flex gap-4 group">
-                    <div className="w-12 h-12 shrink-0 bg-navy-dark flex items-center justify-center group-hover:bg-crimson transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-crimson/20">
-                      <feature.icon className="w-5 h-5 text-gold group-hover:text-white transition-colors duration-500" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-navy mb-1 text-sm uppercase tracking-wide">
-                        {feature.title}
-                      </h3>
-                      <p className="text-warm-gray text-sm leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
+                  <FeatureItem feature={feature} />
                 </Reveal>
               ))}
             </div>

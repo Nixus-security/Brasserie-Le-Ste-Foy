@@ -8,14 +8,12 @@ import Button, { ArrowIcon } from "@/components/Button";
 export default function ChefSpecial() {
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-navy-dark relative overflow-hidden">
-      {/* Decorative gradient blob */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-crimson/[0.04] rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal animation="fade-up" duration={1000}>
           <div className="grid lg:grid-cols-2 gap-0 items-stretch">
             <div className="relative bg-gradient-to-br from-crimson to-crimson-dark p-8 sm:p-10 lg:p-14 flex flex-col justify-center overflow-hidden">
-              {/* Decorative corner */}
               <div className="absolute top-0 right-0 w-32 h-32 border-r-2 border-t-2 border-white/10 m-4" />
               <div className="absolute bottom-0 left-0 w-32 h-32 border-l-2 border-b-2 border-white/10 m-4" />
 
@@ -49,7 +47,8 @@ export default function ChefSpecial() {
                 src="/images/plat.png"
                 alt="Œufs meurette — Spécialité du chef"
                 fill
-                className="object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover transition-transform duration-[1.5s] group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-navy-dark/20" />
             </div>
@@ -90,7 +89,7 @@ export default function ChefSpecial() {
                     />
                   )}
                 </div>
-                <div className="text-white/30 text-[10px] sm:text-xs uppercase tracking-wider">
+                <div className="text-white/50 text-[10px] sm:text-xs uppercase tracking-wider">
                   {stat.label}
                 </div>
               </div>

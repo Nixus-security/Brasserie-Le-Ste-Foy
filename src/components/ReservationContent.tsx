@@ -37,7 +37,6 @@ export default function ReservationContent() {
     <>
       <Navbar />
 
-      {/* Hero */}
       <section className="relative pt-28 sm:pt-36 pb-16 sm:pb-24 bg-navy-deeper">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--color-navy)_0%,_transparent_70%)] opacity-40" />
 
@@ -56,20 +55,18 @@ export default function ReservationContent() {
                 <br />
                 <span className="text-crimson italic">table</span>
               </h1>
-              <p className="text-white/30 text-sm sm:text-base max-w-md mx-auto">
+              <p className="text-white/60 text-sm sm:text-base max-w-md mx-auto">
                 Choisissez votre emplacement préféré et réservez par téléphone
               </p>
             </div>
           </Reveal>
 
-          {/* Zone selector */}
           <Reveal animation="fade-up" delay={200} duration={900}>
-            <p className="text-center text-white/40 text-sm uppercase tracking-[0.15em] mb-8">
+            <p className="text-center text-white/60 text-sm uppercase tracking-[0.15em] mb-8">
               Où souhaitez-vous vous installer ?
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto mb-16">
-              {/* Terrasse */}
               <button
                 onClick={() => setZone("terrasse")}
                 className="group relative overflow-hidden aspect-[4/3] cursor-pointer focus:outline-none"
@@ -78,6 +75,7 @@ export default function ReservationContent() {
                   src="/images/terrasse.png"
                   alt="Terrasse de la brasserie"
                   fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
                   className={`object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${
                     zone === "terrasse"
                       ? "grayscale-0 brightness-100"
@@ -85,7 +83,6 @@ export default function ReservationContent() {
                   }`}
                 />
 
-                {/* Overlay */}
                 <div
                   className={`absolute inset-0 transition-all duration-700 ${
                     zone === "terrasse"
@@ -94,7 +91,6 @@ export default function ReservationContent() {
                   }`}
                 />
 
-                {/* Selected ring */}
                 <div
                   className={`absolute inset-0 border-2 transition-all duration-500 ${
                     zone === "terrasse"
@@ -103,7 +99,6 @@ export default function ReservationContent() {
                   }`}
                 />
 
-                {/* Check badge */}
                 <div
                   className={`absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${
                     zone === "terrasse"
@@ -114,7 +109,6 @@ export default function ReservationContent() {
                   <Check className="w-5 h-5 text-navy-deeper" strokeWidth={3} />
                 </div>
 
-                {/* Label */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div
                     className={`transition-all duration-500 ${
@@ -123,7 +117,7 @@ export default function ReservationContent() {
                   >
                     <MapPin
                       className={`w-8 h-8 mx-auto mb-3 transition-colors duration-500 ${
-                        zone === "terrasse" ? "text-gold" : "text-white/60"
+                        zone === "terrasse" ? "text-gold" : "text-white/70"
                       }`}
                     />
                     <span
@@ -133,14 +127,13 @@ export default function ReservationContent() {
                     >
                       En terrasse
                     </span>
-                    <span className="text-white/40 text-xs uppercase tracking-[0.2em] mt-2 block">
+                    <span className="text-white/60 text-xs uppercase tracking-[0.2em] mt-2 block">
                       Tables extérieures
                     </span>
                   </div>
                 </div>
               </button>
 
-              {/* Intérieur */}
               <button
                 onClick={() => setZone("interieur")}
                 className="group relative overflow-hidden aspect-[4/3] cursor-pointer focus:outline-none"
@@ -149,6 +142,7 @@ export default function ReservationContent() {
                   src="/images/interieur.png"
                   alt="Intérieur de la brasserie"
                   fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
                   className={`object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${
                     zone === "interieur"
                       ? "grayscale-0 brightness-100"
@@ -190,7 +184,7 @@ export default function ReservationContent() {
                   >
                     <Users
                       className={`w-8 h-8 mx-auto mb-3 transition-colors duration-500 ${
-                        zone === "interieur" ? "text-gold" : "text-white/60"
+                        zone === "interieur" ? "text-gold" : "text-white/70"
                       }`}
                     />
                     <span
@@ -200,7 +194,7 @@ export default function ReservationContent() {
                     >
                       En salle
                     </span>
-                    <span className="text-white/40 text-xs uppercase tracking-[0.2em] mt-2 block">
+                    <span className="text-white/60 text-xs uppercase tracking-[0.2em] mt-2 block">
                       Tables intérieures
                     </span>
                   </div>
@@ -209,7 +203,6 @@ export default function ReservationContent() {
             </div>
           </Reveal>
 
-          {/* Reservation form */}
           <div
             className={`max-w-2xl mx-auto transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               zone
@@ -218,7 +211,6 @@ export default function ReservationContent() {
             }`}
           >
             <div className="border border-white/[0.06] bg-white/[0.02] p-6 sm:p-10">
-              {/* Selected zone recap */}
               <div className="flex items-center justify-center gap-3 mb-8">
                 <div className="w-3 h-3 rounded-full bg-gold animate-pulse" />
                 <span className="text-gold text-sm uppercase tracking-[0.2em] font-medium">
@@ -227,9 +219,8 @@ export default function ReservationContent() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {/* Name */}
                 <div className="sm:col-span-2">
-                  <label className="text-white/30 text-[11px] uppercase tracking-[0.15em] mb-2 block">
+                  <label className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-2 block">
                     Votre nom
                   </label>
                   <input
@@ -237,13 +228,12 @@ export default function ReservationContent() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Jean Dupont"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3.5 text-sm placeholder:text-white/15 focus:border-gold/40 focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3.5 text-sm placeholder:text-white/40 focus:border-gold/40 focus:outline-none transition-colors"
                   />
                 </div>
 
-                {/* Guests */}
                 <div>
-                  <label className="text-white/30 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
+                  <label className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
                     <Users className="w-3.5 h-3.5" />
                     Convives
                   </label>
@@ -263,9 +253,8 @@ export default function ReservationContent() {
                   </select>
                 </div>
 
-                {/* Phone */}
                 <div>
-                  <label className="text-white/30 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
+                  <label className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
                     <Phone className="w-3.5 h-3.5" />
                     Téléphone
                   </label>
@@ -274,13 +263,12 @@ export default function ReservationContent() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="06 12 34 56 78"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3.5 text-sm placeholder:text-white/15 focus:border-gold/40 focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3.5 text-sm placeholder:text-white/40 focus:border-gold/40 focus:outline-none transition-colors"
                   />
                 </div>
 
-                {/* Date */}
                 <div>
-                  <label className="text-white/30 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
+                  <label className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
                     <CalendarDays className="w-3.5 h-3.5" />
                     Date
                   </label>
@@ -292,9 +280,8 @@ export default function ReservationContent() {
                   />
                 </div>
 
-                {/* Time */}
                 <div>
-                  <label className="text-white/30 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
+                  <label className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5" />
                     Heure
                   </label>
@@ -317,9 +304,8 @@ export default function ReservationContent() {
                   </select>
                 </div>
 
-                {/* Message */}
                 <div className="sm:col-span-2">
-                  <label className="text-white/30 text-[11px] uppercase tracking-[0.15em] mb-2 block">
+                  <label className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-2 block">
                     Message (optionnel)
                   </label>
                   <textarea
@@ -327,12 +313,11 @@ export default function ReservationContent() {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Allergies, occasion spéciale, chaise bébé..."
                     rows={3}
-                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3.5 text-sm placeholder:text-white/15 focus:border-gold/40 focus:outline-none transition-colors resize-none"
+                    className="w-full bg-white/[0.04] border border-white/[0.08] text-white px-4 py-3.5 text-sm placeholder:text-white/40 focus:border-gold/40 focus:outline-none transition-colors resize-none"
                   />
                 </div>
               </div>
 
-              {/* Submit */}
               <div className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
                 <Button
                   href={`tel:+33426641388`}
@@ -355,7 +340,7 @@ export default function ReservationContent() {
                 </Button>
               </div>
 
-              <p className="text-center text-white/15 text-xs mt-6">
+              <p className="text-center text-white/40 text-xs mt-6">
                 La réservation sera confirmée par téléphone ou email
               </p>
             </div>
@@ -363,7 +348,6 @@ export default function ReservationContent() {
         </div>
       </section>
 
-      {/* Info */}
       <section className="py-12 sm:py-16 bg-navy-dark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -394,8 +378,8 @@ export default function ReservationContent() {
                     <h3 className="text-white text-sm font-medium mb-1">
                       {item.title}
                     </h3>
-                    <p className="text-white/50 text-sm">{item.text}</p>
-                    <p className="text-white/20 text-xs mt-1">{item.sub}</p>
+                    <p className="text-white/60 text-sm">{item.text}</p>
+                    <p className="text-white/50 text-xs mt-1">{item.sub}</p>
                   </div>
                 </div>
               </Reveal>

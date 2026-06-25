@@ -124,7 +124,6 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
 
   return (
     <div ref={ref} className="relative grid md:grid-cols-[1fr_80px_1fr] gap-0 items-start">
-      {/* Left side */}
       <div
         className={`py-6 sm:py-10 px-4 sm:px-8 ${
           isLeft ? "md:text-right" : "md:order-3"
@@ -155,14 +154,13 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             >
               {item.title}
             </h3>
-            <p className="text-white/40 text-sm sm:text-base leading-relaxed">
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">
               {item.text}
             </p>
           </>
         )}
       </div>
 
-      {/* Center node */}
       <div className="hidden md:flex flex-col items-center">
         <div className="w-[1px] h-10 bg-white/10" />
         <div
@@ -188,7 +186,6 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
               {item.year}
             </span>
           </div>
-          {/* Pulse ring */}
           <div
             className={`absolute inset-0 rounded-full border ${
               item.accent ? "border-crimson/20" : "border-gold/10"
@@ -210,7 +207,6 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
         />
       </div>
 
-      {/* Right side */}
       <div
         className={`py-6 sm:py-10 px-4 sm:px-8 ${
           isLeft ? "md:order-3 hidden md:block" : ""
@@ -245,7 +241,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             >
               {item.title}
             </h3>
-            <p className="text-white/40 text-sm sm:text-base leading-relaxed">
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">
               {item.text}
             </p>
           </>
@@ -278,7 +274,6 @@ export default function Timeline() {
       ref={sectionRef}
       className="py-16 sm:py-24 lg:py-32 bg-navy-deeper relative overflow-hidden"
     >
-      {/* Animated background gradient that follows scroll */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -286,7 +281,6 @@ export default function Timeline() {
         }}
       />
 
-      {/* Progress line (left edge) */}
       <div className="absolute top-0 left-0 w-[2px] h-full bg-white/[0.03]">
         <div
           className="w-full bg-gradient-to-b from-crimson via-gold to-crimson"
@@ -297,7 +291,6 @@ export default function Timeline() {
         />
       </div>
 
-      {/* Scroll percentage indicator */}
       <div
         className="fixed right-6 z-30 hidden lg:flex flex-col items-center gap-2"
         style={{
@@ -313,16 +306,14 @@ export default function Timeline() {
             style={{ height: `${progress * 100}%`, transition: "height 0.1s linear" }}
           />
         </div>
-        <span className="text-white/20 text-[10px] font-mono">
+        <span className="text-white/50 text-[10px] font-mono">
           {Math.round(progress * 100)}%
         </span>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Header */}
         <TimelineHeader />
 
-        {/* Center line with progress fill */}
         <div className="absolute left-1/2 top-48 bottom-0 -translate-x-1/2 w-[1px] bg-white/[0.04] hidden md:block">
           <div
             className="w-full bg-gradient-to-b from-gold/40 via-crimson/30 to-gold/40"
@@ -333,7 +324,6 @@ export default function Timeline() {
           />
         </div>
 
-        {/* Timeline items */}
         <div className="space-y-0">
           {timeline.map((item, i) => (
             <TimelineCard key={item.title} item={item} index={i} />

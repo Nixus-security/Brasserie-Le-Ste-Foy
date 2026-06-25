@@ -10,13 +10,13 @@
   --color-crimson-light: #e8334d;
   --color-cream: #FAF7F2;
   --color-cream-dark: #EDE8DF;
-  --color-warm-gray: #8B8178;
+  --color-warm-gray: #736A62;
   --color-warm-white: #F5F0E8;
   --color-gold: #C4A35A;
   --color-gold-light: #D4B872;
 
-  --font-heading: "Playfair Display", Georgia, serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Outfit", system-ui, sans-serif;
 }
 
 @layer base {

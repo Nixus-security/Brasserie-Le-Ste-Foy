@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 export default function HistoirePage() {
   return (
     <main>
-      {/* Hero */}
       <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-end">
         <Image
-          src="/images/Capture d'écran 2026-06-24 204755.png"
+          src="/images/devanture-brasserie.png"
           alt="Façade de la Brasserie Le Ste Foy"
           fill
+          sizes="100vw"
           className="object-cover"
           priority
         />

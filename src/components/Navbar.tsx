@@ -45,7 +45,6 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        {/* Scroll progress bar */}
         <div
           className="scroll-progress absolute bottom-0 left-0 h-[2px] z-50"
           style={{
@@ -59,7 +58,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 sm:h-20 md:h-24">
             <TransitionLink href="/" className="flex items-center gap-2 sm:gap-3 group relative z-50">
               <Image
-                src="/images/logo Braseerie St-foy.jpg"
+                src="/images/logo-brasserie-ste-foy.jpg"
                 alt="Brasserie Le Ste Foy"
                 width={52}
                 height={52}
@@ -121,7 +120,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Fullscreen mobile overlay */}
       <div
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           open
@@ -172,8 +170,8 @@ export default function Navbar() {
             }`}
             style={{ transitionDelay: open ? "900ms" : "0ms" }}
           >
-            <p className="text-white/20 text-xs">04 26 64 13 88</p>
-            <p className="text-white/15 text-[10px] mt-1 uppercase tracking-[0.2em]">
+            <p className="text-white/50 text-xs">04 26 64 13 88</p>
+            <p className="text-white/40 text-[10px] mt-1 uppercase tracking-[0.2em]">
               7 Place Xavier Ricard, Sainte-Foy-lès-Lyon
             </p>
           </div>

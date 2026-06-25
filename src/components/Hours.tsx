@@ -47,9 +47,10 @@ export default function Hours() {
     >
       <div className="absolute inset-0">
         <Image
-          src="/images/Capture d'écran 2026-06-24 204811.png"
+          src="/images/terrasse-soiree.png"
           alt=""
           fill
+          sizes="100vw"
           className="object-cover opacity-10"
         />
         <div className="absolute inset-0 bg-navy-deeper/90" />
@@ -74,7 +75,7 @@ export default function Hours() {
             </Reveal>
 
             <Reveal animation="blur-in" delay={200} duration={800}>
-              <p className="text-white/40 text-lg mb-12">
+              <p className="text-white/60 text-lg mb-12">
                 Ouvert du lundi au samedi. Restauration le midi, bar toute la
                 journée.
               </p>
@@ -101,7 +102,7 @@ export default function Hours() {
                       )}
                       <span
                         className={`font-medium text-sm ${
-                          index === today ? "text-white" : "text-white/60"
+                          index === today ? "text-white" : "text-white/70"
                         }`}
                       >
                         {item.day}
@@ -115,8 +116,8 @@ export default function Hours() {
                     <span
                       className={`text-sm ${
                         item.closed
-                          ? "text-white/20 italic"
-                          : "text-white/50 font-mono"
+                          ? "text-white/50 italic"
+                          : "text-white/60 font-mono"
                       }`}
                     >
                       {item.hours}
@@ -136,7 +137,7 @@ export default function Hours() {
                 >
                   <div className="bg-navy-deeper flex flex-col items-center gap-2 p-5 text-center">
                     <service.icon className="w-5 h-5 text-gold" />
-                    <span className="text-white/40 text-[10px] uppercase tracking-wider leading-tight">
+                    <span className="text-white/60 text-[10px] uppercase tracking-wider leading-tight">
                       {service.label}
                     </span>
                   </div>
@@ -168,7 +169,7 @@ export default function Hours() {
                   <h3 className="font-medium text-white text-sm mb-1">
                     Notre adresse
                   </h3>
-                  <p className="text-white/40 text-sm leading-relaxed">
+                  <p className="text-white/60 text-sm leading-relaxed">
                     7 Place Xavier Ricard
                     <br />
                     69110 Sainte-Foy-lès-Lyon
@@ -184,7 +185,7 @@ export default function Hours() {
                   <h3 className="font-medium text-white text-sm mb-1">
                     Réservation & À emporter
                   </h3>
-                  <p className="text-white/40 text-sm leading-relaxed">
+                  <p className="text-white/60 text-sm leading-relaxed">
                     Réservation par téléphone recommandée.
                     <br />
                     Plats à emporter disponibles sur toute la carte.

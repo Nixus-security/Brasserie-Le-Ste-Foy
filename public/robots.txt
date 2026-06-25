@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://brasserie-le-ste-foy.fr/sitemap.xml

@@ -112,7 +112,7 @@ export default function Testimonials() {
 
   useEffect(() => {
     if (!isAuto) return;
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, 8000);
     return () => clearInterval(timer);
   }, [isAuto, next]);
 
@@ -124,14 +124,12 @@ export default function Testimonials() {
 
   return (
     <section className="relative py-16 sm:py-24 lg:py-32 bg-navy-deeper overflow-hidden">
-      {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-crimson/[0.03] rounded-full -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gold/[0.02] rounded-full translate-x-1/3 translate-y-1/3" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/[0.02] rounded-full" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/[0.015] rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Header */}
         <div className="text-center mb-12 sm:mb-20">
           <div className="inline-flex items-center gap-4 mb-6">
             <span className="w-16 h-[1px] bg-gradient-to-r from-transparent to-gold" />
@@ -146,7 +144,6 @@ export default function Testimonials() {
             nos <span className="text-crimson italic">clients</span>
           </h2>
 
-          {/* Rating badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             <a
               href="https://www.tripadvisor.fr/Restaurant_Review-g1080964-d8772587-Reviews-Brasserie_Le_Ste_Foy-Sainte_Foy_les_Lyon_Rhone_Auvergne_Rhone_Alpes.html"
@@ -160,7 +157,7 @@ export default function Testimonials() {
               <div className="text-left">
                 <div className="flex items-center gap-1.5">
                   <span className="text-white font-semibold text-sm">4.1</span>
-                  <span className="text-white/30 text-xs">/5</span>
+                  <span className="text-white/50 text-xs">/5</span>
                   <div className="flex gap-0.5 ml-1">
                     {[1,2,3,4].map(s => (
                       <div key={s} className="w-2 h-2 rounded-full bg-[#34E0A1]" />
@@ -168,7 +165,7 @@ export default function Testimonials() {
                     <div className="w-2 h-2 rounded-full bg-[#34E0A1]/30" />
                   </div>
                 </div>
-                <span className="text-white/25 text-[10px]">57 avis · TripAdvisor</span>
+                <span className="text-white/50 text-[10px]">57 avis · TripAdvisor</span>
               </div>
             </a>
 
@@ -187,7 +184,7 @@ export default function Testimonials() {
               <div className="text-left">
                 <div className="flex items-center gap-1.5">
                   <span className="text-white font-semibold text-sm">4.4</span>
-                  <span className="text-white/30 text-xs">/5</span>
+                  <span className="text-white/50 text-xs">/5</span>
                   <div className="flex gap-0.5 ml-1">
                     {[1,2,3,4].map(s => (
                       <div key={s} className="w-2 h-2 rounded-full bg-gold" />
@@ -195,24 +192,22 @@ export default function Testimonials() {
                     <div className="w-2 h-2 rounded-full bg-gold/40" />
                   </div>
                 </div>
-                <span className="text-white/25 text-[10px]">66 avis · Google</span>
+                <span className="text-white/50 text-[10px]">66 avis · Google</span>
               </div>
             </a>
 
             <div className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.06] px-5 py-3">
               <span className="text-crimson font-[family-name:var(--font-heading)] text-lg">#6</span>
               <div className="text-left">
-                <span className="text-white/50 text-[11px] block leading-tight">sur 18 restaurants</span>
-                <span className="text-white/25 text-[10px]">Sainte-Foy-lès-Lyon</span>
+                <span className="text-white/60 text-[11px] block leading-tight">sur 18 restaurants</span>
+                <span className="text-white/50 text-[10px]">Sainte-Foy-lès-Lyon</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Main testimonial */}
         <div className="max-w-4xl mx-auto mb-16">
           <div className="relative">
-            {/* Giant quote mark */}
             <div className="absolute -top-8 left-0 sm:-left-4 pointer-events-none">
               <svg
                 className="w-20 h-20 sm:w-28 sm:h-28 text-crimson/10"
@@ -223,14 +218,12 @@ export default function Testimonials() {
               </svg>
             </div>
 
-            {/* Featured review content */}
             <div
               className={`transition-all duration-500 ${
                 fade ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
               <div className="text-center px-4 sm:px-12 pt-12">
-                {/* Stars */}
                 <div className="flex items-center justify-center gap-1.5 mb-8">
                   {Array.from({ length: 5 }).map((_, s) => (
                     <Star
@@ -238,21 +231,18 @@ export default function Testimonials() {
                       className={`w-5 h-5 ${
                         s < current.rating
                           ? "fill-gold text-gold"
-                          : "text-white/10"
+                          : "text-white/40"
                       }`}
                     />
                   ))}
                 </div>
 
-                {/* Quote text */}
                 <p className="font-[family-name:var(--font-heading)] text-white/80 text-lg sm:text-xl lg:text-3xl leading-relaxed lg:leading-relaxed mb-8 sm:mb-10 italic">
                   &ldquo;{current.text}&rdquo;
                 </p>
 
-                {/* Divider */}
                 <div className="w-12 h-[1px] bg-gold/40 mx-auto mb-8" />
 
-                {/* Author */}
                 <div className="flex flex-col items-center gap-3">
                   <div className="w-14 h-14 rounded-full bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center text-white font-[family-name:var(--font-heading)] text-xl shadow-lg shadow-crimson/20">
                     {current.name.charAt(0)}
@@ -261,7 +251,7 @@ export default function Testimonials() {
                     <div className="text-white font-medium text-base tracking-wide">
                       {current.name}
                     </div>
-                    <div className="text-white/25 text-xs mt-1">
+                    <div className="text-white/50 text-xs mt-1">
                       {current.badge && `${current.badge} · `}
                       {current.date}
                     </div>
@@ -272,7 +262,6 @@ export default function Testimonials() {
           </div>
         </div>
 
-        {/* Side reviews (desktop) */}
         <div className="hidden lg:grid grid-cols-3 gap-5 max-w-5xl mx-auto mb-14">
           {[side3, side1, side2].map((review, i) => (
             <button
@@ -296,7 +285,7 @@ export default function Testimonials() {
                   />
                 ))}
               </div>
-              <p className="text-white/30 text-sm leading-relaxed line-clamp-2 group-hover:text-white/50 transition-colors mb-4">
+              <p className="text-white/50 text-sm leading-relaxed line-clamp-2 group-hover:text-white/70 transition-colors mb-4">
                 &ldquo;{review.text}&rdquo;
               </p>
               <div className="flex items-center gap-2.5">
@@ -304,17 +293,16 @@ export default function Testimonials() {
                   {review.name.charAt(0)}
                 </div>
                 <div>
-                  <div className="text-white/50 text-xs font-medium">
+                  <div className="text-white/60 text-xs font-medium">
                     {review.name}
                   </div>
-                  <div className="text-white/15 text-[10px]">{review.date}</div>
+                  <div className="text-white/40 text-[10px]">{review.date}</div>
                 </div>
               </div>
             </button>
           ))}
         </div>
 
-        {/* Progress bar navigation */}
         <div className="flex items-center justify-center gap-1">
           {reviews.map((_, i) => (
             <button
@@ -337,13 +325,12 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Google CTA */}
         <div className="text-center mt-10">
           <a
             href="https://maps.google.com/?q=Brasserie+Le+Ste+Foy+Sainte-Foy-lès-Lyon"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-white/20 hover:text-gold text-xs uppercase tracking-[0.2em] transition-colors"
+            className="inline-flex items-center gap-2 text-white/50 hover:text-gold text-xs uppercase tracking-[0.2em] transition-colors"
           >
             Voir tous les avis sur Google
             <svg

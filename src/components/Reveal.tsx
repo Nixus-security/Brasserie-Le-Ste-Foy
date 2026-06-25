@@ -99,7 +99,6 @@ export default function Reveal({
       style={{
         ...(visible ? visibleStyle : hiddenStyle),
         transition: `all ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: "transform, opacity, clip-path, filter",
       }}
     >
       {children}

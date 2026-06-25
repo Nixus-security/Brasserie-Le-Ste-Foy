@@ -12,7 +12,6 @@ export default function HistoireContent() {
     <>
       <Navbar />
 
-      {/* Intro */}
       <section className="py-16 sm:py-24 bg-cream">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal animation="fade-up" duration={1000}>
@@ -32,7 +31,7 @@ export default function HistoireContent() {
               <div className="md:col-span-2">
                 <div className="overflow-hidden">
                   <Image
-                    src="/images/Capture d'écran 2026-06-24 204732.png"
+                    src="/images/facade-brasserie.png"
                     alt="Devanture historique"
                     width={400}
                     height={300}
@@ -45,20 +44,18 @@ export default function HistoireContent() {
         </div>
       </section>
 
-      {/* Timeline */}
       <Timeline />
 
-      {/* Photos section */}
       <section className="py-16 sm:py-24 bg-cream">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { src: "/images/Capture d'écran 2026-06-24 204908.png", alt: "L'intérieur aujourd'hui" },
-              { src: "/images/Capture d'écran 2026-06-24 204811.png", alt: "La terrasse" },
-              { src: "/images/Capture d'écran 2026-06-24 204755.png", alt: "La façade" },
+              { src: "/images/interieur-bar.png", alt: "L'intérieur aujourd'hui" },
+              { src: "/images/terrasse-soiree.png", alt: "La terrasse" },
+              { src: "/images/devanture-brasserie.png", alt: "La façade" },
               { src: "/images/plat.png", alt: "Nos plats maison" },
               { src: "/images/eglise-du-centre-2024-scaled.jpg", alt: "Place Xavier Ricard" },
-              { src: "/images/Capture d'écran 2026-06-24 204732.png", alt: "L'entrée" },
+              { src: "/images/facade-brasserie.png", alt: "L'entrée" },
             ].map((img, i) => (
               <Reveal key={img.src} animation="zoom-in" delay={i * 80} duration={800}>
                 <div className="relative aspect-[4/3] overflow-hidden group">
@@ -66,7 +63,8 @@ export default function HistoireContent() {
                     src={img.src}
                     alt={img.alt}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-navy-deeper/0 group-hover:bg-navy-deeper/40 transition-colors duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
@@ -79,7 +77,6 @@ export default function HistoireContent() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 sm:py-24 bg-navy-dark">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal animation="fade-up" duration={900}>
@@ -89,7 +86,7 @@ export default function HistoireContent() {
               <br />
               de <span className="text-crimson">notre histoire</span>
             </h3>
-            <p className="text-white/30 text-sm sm:text-base mb-10 max-w-md mx-auto">
+            <p className="text-white/60 text-sm sm:text-base mb-10 max-w-md mx-auto">
               Réservez votre table et découvrez par vous-même l&apos;ambiance
               qui fait vivre la Place Xavier Ricard depuis plus d&apos;un siècle.
             </p>
