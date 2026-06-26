@@ -28,14 +28,14 @@ export default function Marquee({
       >
         <span
           className={`font-[family-name:var(--font-heading)] text-5xl sm:text-7xl lg:text-[8rem] uppercase tracking-wider ${
-            dark ? "text-white/[0.03]" : "text-navy/[0.04]"
+            dark ? "text-white/[0.3]" : "text-navy/[0.3]"
           }`}
         >
           {repeated}
         </span>
         <span
           className={`font-[family-name:var(--font-heading)] text-5xl sm:text-7xl lg:text-[8rem] uppercase tracking-wider ${
-            dark ? "text-white/[0.03]" : "text-navy/[0.04]"
+            dark ? "text-white/[0.3]" : "text-navy/[0.3]"
           }`}
         >
           {repeated}

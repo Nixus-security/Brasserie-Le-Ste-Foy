@@ -44,7 +44,7 @@ export default function ChefSpecial() {
 
             <div className="relative h-72 lg:h-auto min-h-[300px] overflow-hidden group">
               <Image
-                src="/images/plat.png"
+                src="/images/plat-nobg.png"
                 alt="Œufs meurette — Spécialité du chef"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"

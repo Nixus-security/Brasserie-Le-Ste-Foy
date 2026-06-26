@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type TransitionContextType = {
   navigateTo: (href: string) => void;
@@ -24,25 +25,32 @@ export function usePageTransition() {
   return useContext(TransitionContext);
 }
 
-const COLS = 5;
+const ROWS = 7;
+const STAGGER = 0.03;
 
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [phase, setPhase] = useState<"idle" | "exit" | "hold" | "enter">("idle");
+  const [phase, setPhase] = useState<"idle" | "exit" | "hold" | "enter">(
+    "idle"
+  );
   const pendingHref = useRef<string | null>(null);
+  const safetyTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const navigateTo = useCallback(
     (href: string) => {
       const targetPath = href.split("#")[0] || "/";
       if (targetPath === pathname && !href.includes("#")) return;
+      if (phase !== "idle") return;
       pendingHref.current = href;
       setPhase("exit");
     },
-    [pathname]
+    [pathname, phase]
   );
 
   useEffect(() => {
+    clearTimeout(safetyTimer.current);
+
     if (phase === "exit") {
       const timer = setTimeout(() => {
         if (pendingHref.current) {
@@ -51,110 +59,107 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         }
         window.scrollTo(0, 0);
         setPhase("hold");
-      }, 700);
+      }, 450);
+      safetyTimer.current = setTimeout(() => setPhase("idle"), 3000);
       return () => clearTimeout(timer);
     }
 
     if (phase === "hold") {
-      const timer = setTimeout(() => setPhase("enter"), 200);
+      const timer = setTimeout(() => setPhase("enter"), 300);
       return () => clearTimeout(timer);
     }
 
     if (phase === "enter") {
-      const timer = setTimeout(() => setPhase("idle"), 900);
+      const timer = setTimeout(() => setPhase("idle"), 700);
       return () => clearTimeout(timer);
     }
   }, [phase, router]);
 
+  useEffect(() => {
+    return () => clearTimeout(safetyTimer.current);
+  }, []);
+
+  const closing = phase === "exit" || phase === "hold";
+
   return (
     <TransitionContext.Provider value={{ navigateTo }}>
-      {/* Multi-column wipe overlay */}
+      {/* Horizontal blinds overlay */}
       <div className="fixed inset-0 z-[999] pointer-events-none">
-        {Array.from({ length: COLS }).map((_, i) => (
+        {Array.from({ length: ROWS }).map((_, i) => (
           <div
             key={i}
-            className="absolute top-0 bottom-0 bg-navy-deeper"
+            className="absolute left-0 right-0 bg-navy-deeper"
             style={{
-              left: `${(i / COLS) * 100}%`,
-              width: `${100 / COLS + 0.5}%`,
-              transform:
-                phase === "exit" || phase === "hold"
-                  ? "scaleY(1)"
-                  : "scaleY(0)",
+              top: `${(i / ROWS) * 100}%`,
+              height: `${100 / ROWS + 0.5}%`,
+              transform: closing ? "scaleY(1)" : "scaleY(0)",
               transformOrigin:
-                phase === "enter" || phase === "idle" ? "top" : "bottom",
+                phase === "enter" || phase === "idle" ? "bottom" : "top",
               transition:
                 phase === "exit"
-                  ? `transform 0.5s cubic-bezier(0.76, 0, 0.24, 1) ${i * 0.06}s`
+                  ? `transform 0.25s cubic-bezier(0.76, 0, 0.24, 1) ${i * STAGGER}s`
                   : phase === "enter"
-                    ? `transform 0.5s cubic-bezier(0.76, 0, 0.24, 1) ${i * 0.06}s`
+                    ? `transform 0.3s cubic-bezier(0.76, 0, 0.24, 1) ${i * STAGGER}s`
                     : "none",
             }}
           />
         ))}
 
-        {/* Crimson accent columns */}
-        {Array.from({ length: COLS }).map((_, i) => (
+        {/* Crimson accent lines */}
+        {Array.from({ length: ROWS }).map((_, i) => (
           <div
-            key={`accent-${i}`}
-            className="absolute bottom-0 bg-crimson"
+            key={`line-${i}`}
+            className="absolute left-0 right-0 bg-crimson"
             style={{
-              left: `${(i / COLS) * 100}%`,
-              width: `${100 / COLS + 0.5}%`,
-              height: "3px",
-              transform:
-                phase === "exit" || phase === "hold"
-                  ? "scaleX(1)"
-                  : "scaleX(0)",
-              transformOrigin: "left",
+              top: `${((i + 1) / ROWS) * 100}%`,
+              height: "2px",
+              transform: closing ? "scaleX(1)" : "scaleX(0)",
+              transformOrigin: i % 2 === 0 ? "left" : "right",
               transition:
                 phase === "exit"
-                  ? `transform 0.4s cubic-bezier(0.76, 0, 0.24, 1) ${0.15 + i * 0.06}s`
+                  ? `transform 0.2s cubic-bezier(0.76, 0, 0.24, 1) ${0.08 + i * STAGGER}s`
                   : phase === "enter"
-                    ? `transform 0.3s ease ${i * 0.04}s`
+                    ? `transform 0.2s ease ${i * 0.02}s`
                     : "none",
             }}
           />
         ))}
 
-        {/* Center branding */}
+        {/* Center logo */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-4"
+          className="absolute inset-0 flex items-center justify-center"
           style={{
-            opacity: phase === "hold" || (phase === "exit" && true) ? 1 : 0,
+            opacity: phase === "hold" ? 1 : 0,
             transform:
-              phase === "exit"
-                ? "translateY(10px) scale(0.95)"
-                : phase === "hold"
-                  ? "translateY(0) scale(1)"
-                  : "translateY(-10px) scale(0.95)",
+              phase === "hold"
+                ? "translateY(0) scale(1)"
+                : "translateY(8px) scale(0.92)",
             transition:
-              phase === "exit"
-                ? "opacity 0.3s ease 0.35s, transform 0.4s cubic-bezier(0.16,1,0.3,1) 0.35s"
-                : phase === "hold"
-                  ? "opacity 0.2s ease, transform 0.3s ease"
-                  : "opacity 0.2s ease, transform 0.2s ease",
+              phase === "hold"
+                ? "opacity 0.2s ease 0.05s, transform 0.3s cubic-bezier(0.16,1,0.3,1) 0.05s"
+                : "opacity 0.12s ease, transform 0.12s ease",
           }}
         >
-          <div className="w-8 h-[1px] bg-gold/50" />
-          <span className="font-[family-name:var(--font-heading)] text-gold/90 text-xl sm:text-2xl tracking-[0.2em] uppercase">
-            Le Ste Foy
-          </span>
-          <span className="text-white/20 text-[10px] tracking-[0.4em] uppercase">
-            Brasserie
-          </span>
+          <Image
+            src="/images/logo-brasserie-ste-foy.png"
+            alt="Brasserie Le Ste Foy"
+            width={200}
+            height={200}
+            className="w-[120px] h-[120px] sm:w-[180px] sm:h-[180px] lg:w-[200px] lg:h-[200px] drop-shadow-lg"
+            priority
+          />
         </div>
       </div>
 
       {/* Content */}
       <div
         style={{
-          opacity: phase === "exit" || phase === "hold" ? 0 : 1,
+          opacity: closing ? 0 : 1,
           transition:
             phase === "exit"
-              ? "opacity 0.25s ease"
+              ? "opacity 0.12s ease"
               : phase === "enter"
-                ? "opacity 0.4s ease 0.3s"
+                ? "opacity 0.3s ease 0.2s"
                 : "none",
         }}
       >

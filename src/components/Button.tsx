@@ -56,7 +56,7 @@ export default function Button({
 
   const base = `
     group relative inline-flex items-center justify-center font-medium
-    uppercase tracking-[0.12em] overflow-hidden
+    uppercase tracking-[0.12em] overflow-hidden rounded-sm
     transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
     ${sizes[size]}
   `;

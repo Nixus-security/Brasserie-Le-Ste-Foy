@@ -26,14 +26,14 @@ type Props = {
 };
 
 const transforms: Record<Animation, string> = {
-  "fade-up": "translate3d(0, 60px, 0)",
-  "fade-down": "translate3d(0, -60px, 0)",
-  "fade-left": "translate3d(80px, 0, 0)",
-  "fade-right": "translate3d(-80px, 0, 0)",
-  "zoom-in": "scale(0.85)",
-  "zoom-out": "scale(1.15)",
-  "flip-up": "perspective(1000px) rotateX(15deg) translateY(40px)",
-  "blur-in": "translate3d(0, 30px, 0)",
+  "fade-up": "translate3d(0, 30px, 0)",
+  "fade-down": "translate3d(0, -30px, 0)",
+  "fade-left": "translate3d(40px, 0, 0)",
+  "fade-right": "translate3d(-40px, 0, 0)",
+  "zoom-in": "scale(0.92)",
+  "zoom-out": "scale(1.08)",
+  "flip-up": "perspective(1000px) rotateX(8deg) translateY(25px)",
+  "blur-in": "translate3d(0, 20px, 0)",
   "slide-up": "translate3d(0, 100%, 0)",
   "clip-up": "translate3d(0, 0, 0)",
   "clip-left": "translate3d(0, 0, 0)",
@@ -43,10 +43,10 @@ export default function Reveal({
   children,
   animation = "fade-up",
   delay = 0,
-  duration = 800,
+  duration = 1000,
   className = "",
   once = true,
-  threshold = 0.15,
+  threshold = 0.1,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);

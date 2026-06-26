@@ -5,19 +5,27 @@ import Lenis from "lenis";
 
 export default function SmoothScroll() {
   useEffect(() => {
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
 
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
   }, []);
 
   return null;

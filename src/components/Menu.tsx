@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Soup, Beef, Salad, CakeSlice } from "lucide-react";
+import { Soup, Beef, Salad, CakeSlice, ChevronDown } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import Button, { ArrowIcon } from "@/components/Button";
 import type { LucideIcon } from "lucide-react";
@@ -35,7 +35,7 @@ const menuCategories: MenuCategory[] = [
         description:
           "Œufs pochés, sauce bourguignonne, lardons, champignons, croûtons",
         price: "12,50 €",
-        image: "/images/plat.png",
+        image: "/images/plat-nobg.png",
         badge: "Spécialité",
       },
       {
@@ -116,22 +116,231 @@ const menuCategories: MenuCategory[] = [
   },
 ];
 
-export default function Menu() {
-  const [activeTab, setActiveTab] = useState("entrees");
+function MenuItemRow({ item }: { item: MenuItem }) {
+  return (
+    <div className="group relative pl-3 py-4 sm:py-5">
+      <div className="flex items-start justify-between gap-3 mb-1">
+        <div className="min-w-0">
+          <h4 className="font-[family-name:var(--font-heading)] text-[15px] sm:text-lg lg:text-xl text-white group-hover:text-gold transition-colors leading-snug">
+            {item.name}
+          </h4>
+          {item.badge && (
+            <span className="inline-block mt-1 text-[8px] sm:text-[9px] uppercase tracking-[0.1em] px-2 py-0.5 bg-crimson/15 text-crimson-light border border-crimson/20 font-medium">
+              {item.badge}
+            </span>
+          )}
+        </div>
+        <span className="font-[family-name:var(--font-heading)] text-base sm:text-xl lg:text-2xl shrink-0 tabular-nums text-gold">
+          {item.price}
+        </span>
+      </div>
+      <div className="flex items-start gap-3">
+        {item.image && (
+          <div className="hidden sm:block shrink-0 w-14 h-14 lg:w-16 lg:h-16 overflow-hidden relative rounded-sm">
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              sizes="64px"
+              className="object-cover"
+            />
+          </div>
+        )}
+        <p className="text-xs sm:text-sm leading-relaxed text-white/60">
+          {item.description}
+        </p>
+      </div>
+      <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-crimson scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
+    </div>
+  );
+}
+
+function AccordionCategory({ category }: { category: MenuCategory }) {
+  const [open, setOpen] = useState(category.id === "entrees");
+  const Icon = category.icon;
+
+  return (
+    <div className="border border-white/[0.06] mb-2">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`w-full flex items-center justify-between px-4 py-4 transition-colors ${
+          open ? "bg-crimson/[0.08]" : "active:bg-white/[0.03]"
+        }`}
+      >
+        <div className="flex items-center gap-3">
+          <Icon
+            className={`w-5 h-5 transition-colors ${
+              open ? "text-crimson" : "text-white/30"
+            }`}
+          />
+          <div className="text-left">
+            <span
+              className={`block font-[family-name:var(--font-heading)] text-base transition-colors ${
+                open ? "text-white" : "text-white/60"
+              }`}
+            >
+              {category.title}
+            </span>
+            <span className="text-white/30 text-[10px]">
+              {category.items.length} plats
+            </span>
+          </div>
+        </div>
+        <ChevronDown
+          className={`w-4 h-4 text-gold/60 transition-transform duration-300 ${
+            open ? "rotate-0" : "-rotate-90"
+          }`}
+        />
+      </button>
+
+      <div
+        className="overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{
+          maxHeight: open ? `${category.items.length * 120 + 16}px` : "0",
+          opacity: open ? 1 : 0,
+        }}
+      >
+        <div className="px-4 pb-2">
+          {category.items.map((item, i) => (
+            <div key={item.name}>
+              <MenuItemRow item={item} />
+              {i < category.items.length - 1 && (
+                <div className="h-[1px] bg-gradient-to-r from-white/[0.04] via-white/[0.06] to-white/[0.04]" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DesktopContent({
+  activeTab,
+  switchTab,
+}: {
+  activeTab: string;
+  switchTab: (id: string) => void;
+}) {
   const [fade, setFade] = useState(true);
   const activeCategory = menuCategories.find((c) => c.id === activeTab)!;
 
-  function switchTab(id: string) {
+  function handleSwitch(id: string) {
     if (id === activeTab) return;
     setFade(false);
     setTimeout(() => {
-      setActiveTab(id);
+      switchTab(id);
       setFade(true);
     }, 250);
   }
 
   return (
-    <section id="carte" className="relative py-12 sm:py-20 lg:py-32 bg-navy-deeper overflow-hidden">
+    <div className="flex gap-0 max-w-5xl mx-auto">
+      <div className="w-[260px] shrink-0 border-r border-white/[0.06]">
+        <div className="sticky top-32 pr-6">
+          {menuCategories.map((cat) => {
+            const Icon = cat.icon;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => handleSwitch(cat.id)}
+                className={`group w-full text-left py-5 px-6 transition-all duration-500 relative ${
+                  activeTab === cat.id
+                    ? "bg-white/[0.03]"
+                    : "hover:bg-white/[0.02]"
+                }`}
+              >
+                <div
+                  className={`absolute right-0 top-0 bottom-0 w-[2px] transition-all duration-500 ${
+                    activeTab === cat.id ? "bg-crimson" : "bg-transparent"
+                  }`}
+                />
+                <Icon
+                  className={`w-4 h-4 mb-1.5 transition-colors ${
+                    activeTab === cat.id ? "text-crimson" : "text-white/40"
+                  }`}
+                />
+                <span
+                  className={`block font-[family-name:var(--font-heading)] text-lg transition-colors ${
+                    activeTab === cat.id
+                      ? "text-white"
+                      : "text-white/50 group-hover:text-white/70"
+                  }`}
+                >
+                  {cat.title}
+                </span>
+                <span
+                  className={`block text-[11px] mt-0.5 transition-colors ${
+                    activeTab === cat.id ? "text-gold/60" : "text-white/40"
+                  }`}
+                >
+                  {cat.subtitle}
+                </span>
+              </button>
+            );
+          })}
+          <div className="mt-8 px-6">
+            <div className="w-8 h-[1px] bg-white/[0.06] mb-4" />
+            <a
+              href="https://instagram.com/lestefoy_brasserie"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white/50 hover:text-gold text-xs transition-colors"
+            >
+              <svg
+                className="w-3.5 h-3.5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+              </svg>
+              @lestefoy_brasserie
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`flex-1 pl-10 min-w-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          fade ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+        }`}
+      >
+        <div className="mb-8 flex items-center gap-3">
+          {(() => {
+            const Icon = activeCategory.icon;
+            return <Icon className="w-8 h-8 text-crimson/50" />;
+          })()}
+          <div>
+            <h3 className="font-[family-name:var(--font-heading)] text-2xl lg:text-3xl text-white">
+              {activeCategory.title}
+            </h3>
+            <span className="text-white/50 text-[11px] italic">
+              {activeCategory.subtitle}
+            </span>
+          </div>
+        </div>
+
+        {activeCategory.items.map((item, i) => (
+          <div key={item.name + i}>
+            <MenuItemRow item={item} />
+            {i < activeCategory.items.length - 1 && (
+              <div className="h-[1px] bg-gradient-to-r from-white/[0.04] via-white/[0.06] to-white/[0.04]" />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function Menu() {
+  const [activeTab, setActiveTab] = useState("entrees");
+
+  return (
+    <section
+      id="carte"
+      className="relative py-12 sm:py-20 lg:py-32 bg-navy-deeper overflow-hidden"
+    >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-crimson/[0.02] rounded-full translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/[0.02] rounded-full -translate-x-1/2 translate-y-1/2" />
@@ -159,165 +368,79 @@ export default function Menu() {
             <p className="text-white/60 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
               Cuisine française fait maison, produits frais et de saison.
               <span className="text-gold/60 block sm:inline">
-                {" "}Menu du jour disponible chaque midi.
+                {" "}
+                Menu du jour disponible chaque midi.
               </span>
             </p>
           </Reveal>
         </div>
 
-        <div className="flex lg:flex-row flex-col lg:gap-0 gap-6 max-w-5xl mx-auto">
-          {/* Mobile tabs */}
-          <div className="lg:hidden">
-            <div className="flex gap-2 overflow-x-auto scrollbar-none -mx-4 px-4 pb-1">
-              {menuCategories.map((cat) => {
-                const Icon = cat.icon;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => switchTab(cat.id)}
-                    className={`shrink-0 px-4 py-2 text-[11px] uppercase tracking-[0.1em] font-medium transition-all border whitespace-nowrap inline-flex items-center gap-1.5 ${
-                      activeTab === cat.id
-                        ? "text-white bg-crimson border-crimson"
-                        : "text-white/60 border-white/[0.08] active:bg-white/[0.05]"
-                    }`}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    {cat.title}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+        {/* Mobile: Accordion */}
+        <div className="lg:hidden max-w-lg mx-auto">
+          {menuCategories.map((cat) => (
+            <AccordionCategory key={cat.id} category={cat} />
+          ))}
 
-          {/* Desktop tabs */}
-          <div className="hidden lg:block w-[260px] shrink-0 border-r border-white/[0.06]">
-            <div className="sticky top-32 pr-6">
-              {menuCategories.map((cat) => {
-                const Icon = cat.icon;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => switchTab(cat.id)}
-                    className={`group w-full text-left py-5 px-6 transition-all duration-500 relative ${
-                      activeTab === cat.id ? "bg-white/[0.03]" : "hover:bg-white/[0.02]"
-                    }`}
-                  >
-                    <div
-                      className={`absolute right-0 top-0 bottom-0 w-[2px] transition-all duration-500 ${
-                        activeTab === cat.id ? "bg-crimson" : "bg-transparent"
-                      }`}
-                    />
-                    <Icon
-                      className={`w-4 h-4 mb-1.5 transition-colors ${
-                        activeTab === cat.id ? "text-crimson" : "text-white/40"
-                      }`}
-                    />
-                    <span className={`block font-[family-name:var(--font-heading)] text-lg transition-colors ${activeTab === cat.id ? "text-white" : "text-white/50 group-hover:text-white/70"}`}>
-                      {cat.title}
-                    </span>
-                    <span className={`block text-[11px] mt-0.5 transition-colors ${activeTab === cat.id ? "text-gold/60" : "text-white/40"}`}>
-                      {cat.subtitle}
-                    </span>
-                  </button>
-                );
-              })}
-              <div className="mt-8 px-6">
-                <div className="w-8 h-[1px] bg-white/[0.06] mb-4" />
-                <a
-                  href="https://instagram.com/lestefoy_brasserie"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-white/50 hover:text-gold text-xs transition-colors"
+          <div className="mt-6 p-4 bg-gradient-to-br from-crimson/[0.06] to-transparent border border-crimson/10 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-crimson/[0.05] rounded-full translate-x-1/2 -translate-y-1/2" />
+            <div className="relative">
+              <span className="text-crimson text-[9px] uppercase tracking-[0.2em] font-medium">
+                Chaque midi
+              </span>
+              <h4 className="font-[family-name:var(--font-heading)] text-lg text-white mt-1.5 mb-1.5 italic">
+                Menu du jour
+              </h4>
+              <p className="text-white/60 text-xs mb-4">
+                Selon le marché et l&apos;inspiration du chef.
+              </p>
+              <Button
+                href="https://instagram.com/lestefoy_brasserie"
+                variant="ghost"
+                size="sm"
+                external
+              >
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                  </svg>
-                  @lestefoy_brasserie
-                </a>
-              </div>
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                </svg>
+                @lestefoy_brasserie
+                <ArrowIcon className="w-3 h-3" />
+              </Button>
             </div>
           </div>
+        </div>
 
-          {/* Content */}
-          <div
-            className={`flex-1 lg:pl-10 min-w-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-              fade ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-            }`}
-          >
-            <div className="mb-5 sm:mb-8 flex items-center gap-3">
-              {(() => {
-                const Icon = activeCategory.icon;
-                return <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-crimson/50" />;
-              })()}
-              <div>
-                <h3 className="font-[family-name:var(--font-heading)] text-lg sm:text-2xl lg:text-3xl text-white">
-                  {activeCategory.title}
-                </h3>
-                <span className="text-white/50 text-[10px] sm:text-[11px] italic">
-                  {activeCategory.subtitle}
-                </span>
-              </div>
-            </div>
+        {/* Desktop: Sidebar tabs */}
+        <div className="hidden lg:block">
+          <DesktopContent activeTab={activeTab} switchTab={setActiveTab} />
 
-            {activeCategory.items.map((item, i) => (
-              <div key={item.name + i}>
-                <div className="group relative pl-3 py-4 sm:py-6 transition-all">
-                  <div className="flex items-start justify-between gap-3 mb-1.5">
-                    <div className="min-w-0">
-                      <h4 className="font-[family-name:var(--font-heading)] text-[15px] sm:text-lg lg:text-xl transition-colors leading-snug text-white group-hover:text-gold">
-                        {item.name}
-                      </h4>
-                      {item.badge && (
-                        <span className="inline-block mt-1 text-[8px] sm:text-[9px] uppercase tracking-[0.1em] px-2 py-0.5 bg-crimson/15 text-crimson-light border border-crimson/20 font-medium">
-                          {item.badge}
-                        </span>
-                      )}
-                    </div>
-                    <span className="font-[family-name:var(--font-heading)] text-base sm:text-xl lg:text-2xl shrink-0 tabular-nums text-gold">
-                      {item.price}
-                    </span>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    {item.image && (
-                      <div className="hidden sm:block shrink-0 w-14 h-14 lg:w-16 lg:h-16 overflow-hidden relative rounded-sm">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          sizes="64px"
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                    <p className="text-xs sm:text-sm leading-relaxed text-white/60">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-crimson scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
-                </div>
-
-                {i < activeCategory.items.length - 1 && (
-                  <div className="h-[1px] bg-gradient-to-r from-white/[0.04] via-white/[0.06] to-white/[0.04]" />
-                )}
-              </div>
-            ))}
-
-            <div className="mt-6 sm:mt-10 p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-crimson/[0.06] to-transparent border border-crimson/10 relative overflow-hidden">
+          <div className="mt-10 max-w-5xl mx-auto pl-[260px]">
+            <div className="pl-10 p-6 lg:p-8 bg-gradient-to-br from-crimson/[0.06] to-transparent border border-crimson/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-crimson/[0.05] rounded-full translate-x-1/2 -translate-y-1/2" />
               <div className="relative">
-                <span className="text-crimson text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-medium">
+                <span className="text-crimson text-[10px] uppercase tracking-[0.3em] font-medium">
                   Chaque midi
                 </span>
-                <h4 className="font-[family-name:var(--font-heading)] text-lg sm:text-xl lg:text-2xl text-white mt-1.5 mb-1.5 italic">
+                <h4 className="font-[family-name:var(--font-heading)] text-xl lg:text-2xl text-white mt-1.5 mb-1.5 italic">
                   Menu du jour
                 </h4>
-                <p className="text-white/60 text-xs sm:text-sm mb-4">
+                <p className="text-white/60 text-sm mb-4">
                   Selon le marché et l&apos;inspiration du chef.
                 </p>
-                <Button href="https://instagram.com/lestefoy_brasserie" variant="ghost" size="sm" external>
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <Button
+                  href="https://instagram.com/lestefoy_brasserie"
+                  variant="ghost"
+                  size="sm"
+                  external
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
                   </svg>
                   @lestefoy_brasserie

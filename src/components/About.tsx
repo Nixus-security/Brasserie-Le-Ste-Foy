@@ -98,7 +98,7 @@ export default function About() {
               <div className="col-span-5 space-y-4 pt-12">
                 <div className="rounded-sm overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/plat.png"
+                    src="/images/plat-nobg.png"
                     alt="Œufs meurette"
                     width={400}
                     height={400}
@@ -144,7 +144,7 @@ export default function About() {
               </div>
             </Reveal>
 
-            <Reveal animation="clip-up" duration={1100} delay={100}>
+            <Reveal animation="fade-up" duration={1100} delay={100}>
               <h2 className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl lg:text-6xl text-navy leading-tight mb-6 sm:mb-8">
                 Une brasserie
                 <br />

@@ -9,19 +9,19 @@ import Hours from "@/components/Hours";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Marquee from "@/components/Marquee";
+import Actualite from "@/components/Actualite";
 
 export default function Home() {
   return (
     <main>
       <Navbar />
       <Hero />
-      <Marquee text="Brasserie" separator=" · " speed={35} />
+      <Marquee text="Brasserie · Ste Foy · Tradition · Chaleureux · Fait Maison · Terroir · Convivial" separator=" — " speed={140} />
+      <Actualite />
       <About />
       <ChefSpecial />
-      <Marquee text="La Carte" separator=" — " speed={25} dark />
       <Menu />
       <Gallery />
-      <Marquee text="Témoignages" separator=" · " speed={30} dark />
       <Testimonials />
       <Hours />
       <Contact />

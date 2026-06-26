@@ -13,8 +13,8 @@ export default function HistoirePage() {
     <main>
       <section className="relative min-h-[60vh] sm:min-h-[70vh] flex items-end">
         <Image
-          src="/images/devanture-brasserie.png"
-          alt="Façade de la Brasserie Le Ste Foy"
+          src="/images/cafe-de-la-place.png"
+          alt="Grand Café de la Place — façade historique"
           fill
           sizes="100vw"
           className="object-cover"

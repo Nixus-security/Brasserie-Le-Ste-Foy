@@ -20,7 +20,8 @@
 }
 
 @layer base {
-  html {
+  html, body {
+    overflow-x: hidden;
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
@@ -40,6 +41,10 @@
 
   a, button {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   img {
@@ -104,6 +109,16 @@
     transform: translateY(-60px) translateX(var(--drift, 5px)) scale(2);
     opacity: 0;
   }
+}
+
+/* Vertical infinite scroll */
+@keyframes scroll-up {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+@keyframes scroll-down {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
 }
 
 /* Horizontal scroll snap */

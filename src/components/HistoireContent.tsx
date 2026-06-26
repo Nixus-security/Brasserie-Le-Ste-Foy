@@ -53,7 +53,7 @@ export default function HistoireContent() {
               { src: "/images/interieur-bar.png", alt: "L'intérieur aujourd'hui" },
               { src: "/images/terrasse-soiree.png", alt: "La terrasse" },
               { src: "/images/devanture-brasserie.png", alt: "La façade" },
-              { src: "/images/plat.png", alt: "Nos plats maison" },
+              { src: "/images/plat-nobg.png", alt: "Nos plats maison" },
               { src: "/images/eglise-du-centre-2024-scaled.jpg", alt: "Place Xavier Ricard" },
               { src: "/images/facade-brasserie.png", alt: "L'entrée" },
             ].map((img, i) => (

@@ -44,7 +44,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Restaurant",
   name: "Brasserie Le Ste Foy",
-  image: "/images/logo-brasserie-ste-foy.jpg",
+  image: "/images/logo-brasserie-ste-foy.png",
   address: {
     "@type": "PostalAddress",
     streetAddress: "7 Place Xavier Ricard",
@@ -75,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
+    <html lang="fr" data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"

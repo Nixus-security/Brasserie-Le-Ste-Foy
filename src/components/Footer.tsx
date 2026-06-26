@@ -14,11 +14,11 @@ export default function Footer() {
               <Reveal animation="fade-right" duration={900}>
                 <div className="flex items-center gap-4 mb-6">
                   <Image
-                    src="/images/logo-brasserie-ste-foy.jpg"
+                    src="/images/logo-brasserie-ste-foy.png"
                     alt="Brasserie Le Ste Foy"
                     width={60}
                     height={60}
-                    className="rounded-full ring-2 ring-crimson/20"
+                    className="drop-shadow-lg"
                   />
                   <div>
                     <h3 className="font-[family-name:var(--font-heading)] text-xl text-white">

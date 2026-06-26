@@ -106,7 +106,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setRatio(Math.min(entry.intersectionRatio * 2.5, 1));
+        setRatio(Math.min(entry.intersectionRatio * 1.5, 1));
       },
       {
         threshold: Array.from({ length: 20 }, (_, i) => i / 20),
@@ -131,7 +131,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
         style={{
           opacity: eased,
           transform: `translate3d(${isLeft ? -1 : 1}${(1 - eased) * 60}px, ${(1 - eased) * 20}px, 0) scale(${0.92 + eased * 0.08})`,
-          transition: "transform 0.1s linear, opacity 0.1s linear",
+          transition: "transform 0.6s ease-out, opacity 0.5s ease-out",
         }}
       >
         {isLeft && (
@@ -168,7 +168,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           style={{
             transform: `scale(${0.6 + eased * 0.4})`,
             opacity: eased,
-            transition: "transform 0.15s ease-out, opacity 0.15s ease-out",
+            transition: "transform 0.5s ease-out, opacity 0.5s ease-out",
           }}
         >
           <div
@@ -193,7 +193,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             style={{
               transform: `scale(${1 + eased * 0.4})`,
               opacity: Math.max(0, 1 - eased * 1.5),
-              transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+              transition: "transform 0.6s ease-out, opacity 0.6s ease-out",
             }}
           />
         </div>
@@ -202,7 +202,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           style={{
             background: `linear-gradient(to bottom, ${item.accent ? "rgba(200,16,46,0.3)" : "rgba(255,255,255,0.1)"}, rgba(255,255,255,0.05))`,
             transform: `scaleY(${eased})`,
-            transition: "transform 0.3s ease-out",
+            transition: "transform 0.6s ease-out",
           }}
         />
       </div>
@@ -216,7 +216,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             ? {
                 opacity: eased,
                 transform: `translate3d(${(1 - eased) * 60}px, ${(1 - eased) * 20}px, 0) scale(${0.92 + eased * 0.08})`,
-                transition: "transform 0.1s linear, opacity 0.1s linear",
+                transition: "transform 0.6s ease-out, opacity 0.5s ease-out",
               }
             : undefined
         }
