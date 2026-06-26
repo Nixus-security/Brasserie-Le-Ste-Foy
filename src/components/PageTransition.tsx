@@ -36,36 +36,55 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   );
   const pendingHref = useRef<string | null>(null);
   const safetyTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const phaseRef = useRef(phase);
+  phaseRef.current = phase;
 
   const navigateTo = useCallback(
     (href: string) => {
       const targetPath = href.split("#")[0] || "/";
       if (targetPath === pathname && !href.includes("#")) return;
-      if (phase !== "idle") return;
+      if (phaseRef.current !== "idle") return;
       pendingHref.current = href;
       setPhase("exit");
     },
-    [pathname, phase]
+    [pathname]
   );
 
+  // Exit: animate blinds closing, then push route
   useEffect(() => {
-    clearTimeout(safetyTimer.current);
+    if (phase !== "exit") return;
 
-    if (phase === "exit") {
-      const timer = setTimeout(() => {
-        if (pendingHref.current) {
-          router.push(pendingHref.current);
-          pendingHref.current = null;
-        }
+    const timer = setTimeout(() => {
+      if (pendingHref.current) {
+        router.push(pendingHref.current);
+      }
+    }, 400);
+
+    safetyTimer.current = setTimeout(() => {
+      pendingHref.current = null;
+      setPhase("idle");
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [phase, router]);
+
+  // Detect pathname change → enter hold phase
+  useEffect(() => {
+    if (phaseRef.current === "exit" && pendingHref.current) {
+      const targetPath = pendingHref.current.split("#")[0] || "/";
+      if (pathname === targetPath) {
+        clearTimeout(safetyTimer.current);
+        pendingHref.current = null;
         window.scrollTo(0, 0);
         setPhase("hold");
-      }, 450);
-      safetyTimer.current = setTimeout(() => setPhase("idle"), 3000);
-      return () => clearTimeout(timer);
+      }
     }
+  }, [pathname]);
 
+  // Hold → enter → idle
+  useEffect(() => {
     if (phase === "hold") {
-      const timer = setTimeout(() => setPhase("enter"), 300);
+      const timer = setTimeout(() => setPhase("enter"), 350);
       return () => clearTimeout(timer);
     }
 
@@ -73,7 +92,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
       const timer = setTimeout(() => setPhase("idle"), 700);
       return () => clearTimeout(timer);
     }
-  }, [phase, router]);
+  }, [phase]);
 
   useEffect(() => {
     return () => clearTimeout(safetyTimer.current);
@@ -83,7 +102,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
 
   return (
     <TransitionContext.Provider value={{ navigateTo }}>
-      {/* Horizontal blinds overlay */}
       <div className="fixed inset-0 z-[999] pointer-events-none">
         {Array.from({ length: ROWS }).map((_, i) => (
           <div
@@ -105,7 +123,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
           />
         ))}
 
-        {/* Crimson accent lines */}
         {Array.from({ length: ROWS }).map((_, i) => (
           <div
             key={`line-${i}`}
@@ -125,7 +142,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
           />
         ))}
 
-        {/* Center logo */}
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
@@ -151,7 +167,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      {/* Content */}
       <div
         style={{
           opacity: closing ? 0 : 1,

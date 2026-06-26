@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Outfit, Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+const montserrat = localFont({
+  src: [
+    { path: "../../public/fonts/Montserrat-Latin.woff2", style: "normal" },
+    { path: "../../public/fonts/Montserrat-LatinItalic.woff2", style: "italic" },
+  ],
   variable: "--font-heading",
   display: "swap",
 });
 
-const outfit = Outfit({
-  subsets: ["latin"],
+const outfit = localFont({
+  src: "../../public/fonts/Outfit-Latin.woff2",
   variable: "--font-body",
   display: "swap",
 });
