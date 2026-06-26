@@ -4,12 +4,12 @@ import Image from "next/image";
 import {
   Clock,
   MapPin,
-  Car,
+  CircleParking,
   Wifi,
   Accessibility,
   Beer,
   Coffee,
-  Utensils,
+  ShoppingBag,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 
@@ -17,19 +17,19 @@ const schedule = [
   { day: "Lundi", hours: "7h00 – 19h45" },
   { day: "Mardi", hours: "7h00 – 19h45" },
   { day: "Mercredi", hours: "7h00 – 19h45" },
-  { day: "Jeudi", hours: "7h00 – 22h00" },
+  { day: "Jeudi", hours: "7h00 – 19h45" },
   { day: "Vendredi", hours: "7h00 – 20h30" },
   { day: "Samedi", hours: "8h00 – 15h00" },
-  { day: "Dimanche", hours: "Fermé", closed: true },
+  { day: "Dimanche", hours: "8h30 – 13h00" },
 ];
 
 const services = [
   { icon: Beer, label: "Bar & Bières" },
   { icon: Coffee, label: "Café & Terrasse" },
-  { icon: Utensils, label: "À emporter" },
+  { icon: ShoppingBag, label: "À emporter" },
   { icon: Wifi, label: "Wi-Fi gratuit" },
   { icon: Accessibility, label: "Accessible PMR" },
-  { icon: Car, label: "Parking rue" },
+  { icon: CircleParking, label: "Parking rue" },
 ];
 
 function getCurrentDay(): number {
@@ -51,9 +51,9 @@ export default function Hours() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-10"
+          className="object-cover opacity-30"
         />
-        <div className="absolute inset-0 bg-navy-deeper/90" />
+        <div className="absolute inset-0 bg-navy-deeper/70" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -76,7 +76,7 @@ export default function Hours() {
 
             <Reveal animation="blur-in" delay={200} duration={800}>
               <p className="text-white/60 text-lg mb-12">
-                Ouvert du lundi au samedi. Restauration le midi, bar toute la
+                Ouvert 7j/7. Restauration le midi, bar toute la
                 journée.
               </p>
             </Reveal>
@@ -135,8 +135,10 @@ export default function Hours() {
                   delay={500 + i * 80}
                   duration={600}
                 >
-                  <div className="bg-navy-deeper flex flex-col items-center gap-2 p-5 text-center">
-                    <service.icon className="w-5 h-5 text-gold" />
+                  <div className="bg-navy-deeper flex flex-col items-center justify-center gap-2 p-5 text-center min-h-[90px]">
+                    <div className="w-5 h-5 flex items-center justify-center shrink-0">
+                      <service.icon className="w-5 h-5 text-gold" />
+                    </div>
                     <span className="text-white/60 text-[10px] uppercase tracking-wider leading-tight">
                       {service.label}
                     </span>
@@ -151,7 +153,7 @@ export default function Hours() {
               <div className="overflow-hidden h-64 lg:h-80 shadow-2xl">
                 <iframe
                   title="Brasserie Le Ste Foy"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2784.5!2d4.7945!3d45.7353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDXCsDQ0JzA3LjEiTiA0wrA0NyczNi4yIkU!5e0!3m2!1sfr!2sfr!4v1"
+                  src="https://maps.google.com/maps?q=Brasserie+Le+Ste+Foy,+7+Place+Xavier+Ricard,+69110+Sainte-Foy-lès-Lyon&t=&z=17&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

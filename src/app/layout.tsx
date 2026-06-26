@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Outfit, Montserrat } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
@@ -83,7 +83,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${cormorant.variable} ${outfit.variable} font-[family-name:var(--font-body)] antialiased bg-navy-deeper grain`}
+        className={`${montserrat.variable} ${outfit.variable} font-[family-name:var(--font-body)] antialiased bg-navy-deeper grain`}
       >
         <SmoothScroll />
         <PageTransition>{children}</PageTransition>

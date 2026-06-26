@@ -221,7 +221,7 @@ export default function Actualite() {
               </span>
               <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-gold" />
             </div>
-            <h2 className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl lg:text-6xl text-white leading-tight">
+            <h2 className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl lg:text-6xl text-white leading-tight font-bold">
               Nos <span className="text-crimson italic">événements</span>
             </h2>
           </div>

@@ -81,7 +81,7 @@ function TimelineHeader() {
         <span className="w-16 h-[1px] bg-gradient-to-l from-transparent to-gold/60" />
       </div>
       <h2
-        className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl lg:text-5xl text-white transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="font-[family-name:var(--font-heading)] text-3xl sm:text-4xl lg:text-5xl text-white transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(30px)",
@@ -93,6 +93,34 @@ function TimelineHeader() {
         <span className="text-crimson italic">brasserie de quartier</span>
       </h2>
     </div>
+  );
+}
+
+function CardContent({ item }: { item: TimelineItem }) {
+  return (
+    <>
+      <div className="md:hidden inline-flex items-center gap-2 mb-3">
+        <span
+          className={`text-xs font-bold px-3 py-1 ${
+            item.accent
+              ? "bg-crimson/20 text-crimson border border-crimson/30"
+              : "bg-white/[0.05] text-gold border border-white/10"
+          }`}
+        >
+          {item.year}
+        </span>
+      </div>
+      <h3
+        className={`font-[family-name:var(--font-heading)] text-xl sm:text-2xl lg:text-3xl mb-3 ${
+          item.accent ? "text-crimson" : "text-white"
+        }`}
+      >
+        {item.title}
+      </h3>
+      <p className="text-white/60 text-sm sm:text-base leading-relaxed">
+        {item.text}
+      </p>
+    </>
   );
 }
 
@@ -118,134 +146,93 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
   }, []);
 
   const isLeft = index % 2 === 0;
-  const eased = ratio < 0.5
-    ? 4 * ratio * ratio * ratio
-    : 1 - Math.pow(-2 * ratio + 2, 3) / 2;
+  const eased =
+    ratio < 0.5
+      ? 4 * ratio * ratio * ratio
+      : 1 - Math.pow(-2 * ratio + 2, 3) / 2;
+
+  const slideX = (isLeft ? -1 : 1) * (1 - eased) * 50;
+  const slideY = (1 - eased) * 15;
+  const scale = 0.95 + eased * 0.05;
+
+  const contentStyle: React.CSSProperties = {
+    opacity: eased,
+    transform: `translate3d(${slideX}px, ${slideY}px, 0) scale(${scale})`,
+    transition: "transform 0.6s ease-out, opacity 0.5s ease-out",
+  };
 
   return (
-    <div ref={ref} className="relative grid md:grid-cols-[1fr_80px_1fr] gap-0 items-start">
-      <div
-        className={`py-6 sm:py-10 px-4 sm:px-8 ${
-          isLeft ? "md:text-right" : "md:order-3"
-        }`}
-        style={{
-          opacity: eased,
-          transform: `translate3d(${isLeft ? -1 : 1}${(1 - eased) * 60}px, ${(1 - eased) * 20}px, 0) scale(${0.92 + eased * 0.08})`,
-          transition: "transform 0.6s ease-out, opacity 0.5s ease-out",
-        }}
-      >
-        {isLeft && (
-          <>
-            <div className="md:hidden inline-flex items-center gap-2 mb-3">
+    <div ref={ref} className="relative">
+      {/* Mobile layout */}
+      <div className="md:hidden px-4 py-6" style={contentStyle}>
+        <CardContent item={item} />
+      </div>
+
+      {/* Desktop layout */}
+      <div className="hidden md:grid md:grid-cols-[1fr_80px_1fr] items-start">
+        <div
+          className={`py-8 px-8 ${isLeft ? "text-right" : ""}`}
+          style={isLeft ? contentStyle : undefined}
+        >
+          {isLeft && <CardContent item={item} />}
+        </div>
+
+        <div className="flex flex-col items-center">
+          <div className="w-[1px] h-8 bg-white/10" />
+          <div
+            className="relative"
+            style={{
+              transform: `scale(${0.6 + eased * 0.4})`,
+              opacity: eased,
+              transition: "transform 0.5s ease-out, opacity 0.5s ease-out",
+            }}
+          >
+            <div
+              className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-colors duration-500 ${
+                item.accent
+                  ? "border-crimson bg-crimson/20"
+                  : "border-gold/30 bg-white/[0.03]"
+              }`}
+            >
               <span
-                className={`text-xs font-bold px-3 py-1 ${
-                  item.accent
-                    ? "bg-crimson/20 text-crimson border border-crimson/30"
-                    : "bg-white/[0.05] text-gold border border-white/10"
+                className={`font-[family-name:var(--font-heading)] text-xs font-bold ${
+                  item.accent ? "text-crimson" : "text-gold"
                 }`}
               >
                 {item.year}
               </span>
             </div>
-            <h3
-              className={`font-[family-name:var(--font-heading)] text-xl sm:text-2xl lg:text-3xl mb-3 ${
-                item.accent ? "text-crimson" : "text-white"
+            <div
+              className={`absolute inset-0 rounded-full border ${
+                item.accent ? "border-crimson/20" : "border-gold/10"
               }`}
-            >
-              {item.title}
-            </h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">
-              {item.text}
-            </p>
-          </>
-        )}
-      </div>
-
-      <div className="hidden md:flex flex-col items-center">
-        <div className="w-[1px] h-10 bg-white/10" />
-        <div
-          className="relative"
-          style={{
-            transform: `scale(${0.6 + eased * 0.4})`,
-            opacity: eased,
-            transition: "transform 0.5s ease-out, opacity 0.5s ease-out",
-          }}
-        >
-          <div
-            className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-colors duration-500 ${
-              item.accent
-                ? "border-crimson bg-crimson/20"
-                : "border-gold/30 bg-white/[0.03]"
-            }`}
-          >
-            <span
-              className={`font-[family-name:var(--font-heading)] text-xs font-bold ${
-                item.accent ? "text-crimson" : "text-gold"
-              }`}
-            >
-              {item.year}
-            </span>
+              style={{
+                transform: `scale(${1 + eased * 0.4})`,
+                opacity: Math.max(0, 1 - eased * 1.5),
+                transition: "transform 0.6s ease-out, opacity 0.6s ease-out",
+              }}
+            />
           </div>
           <div
-            className={`absolute inset-0 rounded-full border ${
-              item.accent ? "border-crimson/20" : "border-gold/10"
-            }`}
+            className="w-[1px] h-8"
             style={{
-              transform: `scale(${1 + eased * 0.4})`,
-              opacity: Math.max(0, 1 - eased * 1.5),
-              transition: "transform 0.6s ease-out, opacity 0.6s ease-out",
+              background: `linear-gradient(to bottom, ${
+                item.accent
+                  ? "rgba(200,16,46,0.3)"
+                  : "rgba(255,255,255,0.1)"
+              }, rgba(255,255,255,0.05))`,
+              transform: `scaleY(${eased})`,
+              transition: "transform 0.6s ease-out",
             }}
           />
         </div>
-        <div
-          className="w-[1px] flex-1 origin-top"
-          style={{
-            background: `linear-gradient(to bottom, ${item.accent ? "rgba(200,16,46,0.3)" : "rgba(255,255,255,0.1)"}, rgba(255,255,255,0.05))`,
-            transform: `scaleY(${eased})`,
-            transition: "transform 0.6s ease-out",
-          }}
-        />
-      </div>
 
-      <div
-        className={`py-6 sm:py-10 px-4 sm:px-8 ${
-          isLeft ? "md:order-3 hidden md:block" : ""
-        }`}
-        style={
-          !isLeft
-            ? {
-                opacity: eased,
-                transform: `translate3d(${(1 - eased) * 60}px, ${(1 - eased) * 20}px, 0) scale(${0.92 + eased * 0.08})`,
-                transition: "transform 0.6s ease-out, opacity 0.5s ease-out",
-              }
-            : undefined
-        }
-      >
-        {!isLeft && (
-          <>
-            <div className="md:hidden inline-flex items-center gap-2 mb-3">
-              <span
-                className={`text-xs font-bold px-3 py-1 ${
-                  item.accent
-                    ? "bg-crimson/20 text-crimson border border-crimson/30"
-                    : "bg-white/[0.05] text-gold border border-white/10"
-                }`}
-              >
-                {item.year}
-              </span>
-            </div>
-            <h3
-              className={`font-[family-name:var(--font-heading)] text-xl sm:text-2xl lg:text-3xl mb-3 ${
-                item.accent ? "text-crimson" : "text-white"
-              }`}
-            >
-              {item.title}
-            </h3>
-            <p className="text-white/60 text-sm sm:text-base leading-relaxed">
-              {item.text}
-            </p>
-          </>
-        )}
+        <div
+          className={`py-8 px-8 ${!isLeft ? "" : ""}`}
+          style={!isLeft ? contentStyle : undefined}
+        >
+          {!isLeft && <CardContent item={item} />}
+        </div>
       </div>
     </div>
   );
@@ -281,16 +268,6 @@ export default function Timeline() {
         }}
       />
 
-      <div className="absolute top-0 left-0 w-[2px] h-full bg-white/[0.03]">
-        <div
-          className="w-full bg-gradient-to-b from-crimson via-gold to-crimson"
-          style={{
-            height: `${progress * 100}%`,
-            transition: "height 0.1s linear",
-          }}
-        />
-      </div>
-
       <div
         className="fixed right-6 z-30 hidden lg:flex flex-col items-center gap-2"
         style={{
@@ -303,7 +280,10 @@ export default function Timeline() {
         <div className="w-[2px] h-20 bg-white/5 rounded-full overflow-hidden">
           <div
             className="w-full bg-gold rounded-full"
-            style={{ height: `${progress * 100}%`, transition: "height 0.1s linear" }}
+            style={{
+              height: `${progress * 100}%`,
+              transition: "height 0.1s linear",
+            }}
           />
         </div>
         <span className="text-white/50 text-[10px] font-mono">
@@ -314,7 +294,7 @@ export default function Timeline() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <TimelineHeader />
 
-        <div className="absolute left-1/2 top-48 bottom-0 -translate-x-1/2 w-[1px] bg-white/[0.04] hidden md:block">
+        <div className="hidden md:block absolute left-1/2 top-48 bottom-0 -translate-x-1/2 w-[1px] bg-white/[0.04]">
           <div
             className="w-full bg-gradient-to-b from-gold/40 via-crimson/30 to-gold/40"
             style={{
@@ -324,7 +304,7 @@ export default function Timeline() {
           />
         </div>
 
-        <div className="space-y-0">
+        <div>
           {timeline.map((item, i) => (
             <TimelineCard key={item.title} item={item} index={i} />
           ))}

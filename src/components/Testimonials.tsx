@@ -96,7 +96,7 @@ function ScrollColumn({
 
 export default function Testimonials() {
   return (
-    <section className="relative py-20 sm:py-28 lg:py-36 bg-navy-deeper overflow-hidden">
+    <section className="relative py-20 sm:py-28 lg:py-36 bg-navy-dark overflow-hidden">
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-crimson/[0.03] rounded-full -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gold/[0.02] rounded-full translate-x-1/3 translate-y-1/3" />
 
@@ -161,7 +161,7 @@ export default function Testimonials() {
             className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.06] hover:border-[#34E0A1]/30 px-5 py-3 transition-all"
           >
             <svg className="w-5 h-5 text-[#34E0A1]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm4-3c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm2 3c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
+              <path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 004.3 10.163 5.997 5.997 0 005.337-3.267l.406.706.407-.706a5.997 5.997 0 005.337 3.267 5.997 5.997 0 004.3-10.163L24 6.648h-4.35a13.573 13.573 0 00-7.644-2.353zM6.263 17.67a4.728 4.728 0 01-4.721-4.722 4.728 4.728 0 014.721-4.721 4.728 4.728 0 014.722 4.721 4.728 4.728 0 01-4.722 4.722zm5.743-4.891a6.27 6.27 0 00-2.603-4.266 12.207 12.207 0 015.194 0 6.27 6.27 0 00-2.591 4.266zm5.731 4.891a4.728 4.728 0 01-4.722-4.722 4.728 4.728 0 014.722-4.721 4.728 4.728 0 014.721 4.721 4.728 4.728 0 01-4.721 4.722zM6.263 9.93a3.02 3.02 0 00-3.018 3.017 3.02 3.02 0 003.018 3.018 3.02 3.02 0 003.017-3.018A3.02 3.02 0 006.263 9.93zm0 4.26a1.244 1.244 0 110-2.489 1.244 1.244 0 010 2.489zm11.474-4.26a3.02 3.02 0 00-3.018 3.017 3.02 3.02 0 003.018 3.018 3.02 3.02 0 003.017-3.018 3.02 3.02 0 00-3.017-3.017zm0 4.26a1.244 1.244 0 110-2.489 1.244 1.244 0 010 2.489z" />
             </svg>
             <div className="text-left">
               <div className="flex items-center gap-1.5">
@@ -179,16 +179,15 @@ export default function Testimonials() {
           </a>
 
           <div className="flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.06] px-5 py-3">
-            <span className="text-crimson font-[family-name:var(--font-heading)] text-lg">
+            <span className="w-5 h-5 flex items-center justify-center text-crimson font-[family-name:var(--font-heading)] text-sm font-bold">
               #6
             </span>
             <div className="text-left">
-              <span className="text-white/60 text-[11px] block leading-tight">
-                sur 18 restaurants
-              </span>
-              <span className="text-white/50 text-[10px]">
-                Sainte-Foy-lès-Lyon
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-white font-semibold text-sm">sur 18</span>
+                <span className="text-white/50 text-xs">restaurants</span>
+              </div>
+              <span className="text-white/50 text-[10px]">Sainte-Foy-lès-Lyon</span>
             </div>
           </div>
         </div>

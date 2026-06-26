@@ -98,8 +98,8 @@ export default function About() {
               <div className="col-span-5 space-y-4 pt-12">
                 <div className="rounded-sm overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/plat-nobg.png"
-                    alt="Œufs meurette"
+                    src="/images/rue-illuminee.png"
+                    alt="Rue illuminée de Sainte-Foy-lès-Lyon"
                     width={400}
                     height={400}
                     className="object-cover w-full h-48"

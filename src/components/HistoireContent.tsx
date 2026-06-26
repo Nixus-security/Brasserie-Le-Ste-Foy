@@ -55,7 +55,7 @@ export default function HistoireContent() {
               { src: "/images/devanture-brasserie.png", alt: "La façade" },
               { src: "/images/plat-nobg.png", alt: "Nos plats maison" },
               { src: "/images/eglise-du-centre-2024-scaled.jpg", alt: "Place Xavier Ricard" },
-              { src: "/images/facade-brasserie.png", alt: "L'entrée" },
+              { src: "/images/panorama-lyon.png", alt: "Vue panoramique sur Lyon" },
             ].map((img, i) => (
               <Reveal key={img.src} animation="zoom-in" delay={i * 80} duration={800}>
                 <div className="relative aspect-[4/3] overflow-hidden group">
